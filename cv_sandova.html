@@ -1,0 +1,947 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Barbora Šandová - Data Nerd</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;600;700&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'JetBrains Mono', monospace;
+            background: #0a0a15;
+            color: #f0f0f0;
+            min-height: 100vh;
+            background-image: 
+                radial-gradient(circle at 20% 50%, rgba(0, 255, 255, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(255, 0, 255, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 50% 80%, rgba(0, 255, 128, 0.1) 0%, transparent 50%),
+                linear-gradient(0deg, transparent 24%, rgba(255, 255, 255, 0.03) 25%, rgba(255, 255, 255, 0.03) 26%, transparent 27%, transparent 74%, rgba(255, 255, 255, 0.03) 75%, rgba(255, 255, 255, 0.03) 76%, transparent 77%, transparent);
+            background-size: 100% 100%, 100% 100%, 100% 100%, 40px 25px;
+            background-attachment: fixed;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .cv-card {
+            background: rgba(5, 10, 25, 0.92);
+            border: 3px solid;
+            border-image: linear-gradient(45deg, #00ffff, #ff00ff, #00ff80) 1;
+            border-radius: 20px;
+            backdrop-filter: blur(15px);
+            overflow: hidden;
+            position: relative;
+            transition: all 0.4s ease;
+            box-shadow: 
+                0 0 40px rgba(0, 255, 255, 0.3),
+                0 0 80px rgba(255, 0, 255, 0.2),
+                0 0 120px rgba(0, 255, 128, 0.1);
+        }
+        
+        .cv-card > * {
+            position: relative;
+            z-index: 1;
+        }
+        
+        .cv-card:hover {
+            box-shadow: 
+                0 0 50px rgba(0, 255, 255, 0.5),
+                0 0 100px rgba(255, 0, 255, 0.3),
+                0 0 150px rgba(0, 255, 128, 0.2);
+            transform: translateY(-10px) scale(1.01);
+        }
+        
+        .cyber-grid {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: 
+                linear-gradient(rgba(0, 255, 255, 0.1) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 255, 255, 0.1) 1px, transparent 1px);
+            background-size: 50px 50px;
+            pointer-events: none;
+            opacity: 0.3;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #1a1a2e, #16213e, #0f3460);
+            padding: 50px 40px;
+            text-align: center;
+            position: relative;
+            border-bottom: 2px solid #00ffff;
+        }
+        
+        .glitch {
+            position: relative;
+            color: #00ffff;
+            font-size: 3em;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            margin-bottom: 10px;
+            text-shadow: 0 0 10px rgba(0, 255, 255, 0.6);
+        }
+        
+        .glitch::before {
+            content: attr(data-text);
+            position: absolute;
+            top: 0;
+            left: 0;
+            opacity: 0.1;
+            color: #ff00ff;
+            z-index: -1;
+        }
+        
+        .subtitle {
+            color: #ff00ff;
+            font-size: 1.3em;
+            font-weight: 400;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 20px;
+        }
+        
+        .contact-info {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
+            margin-top: 30px;
+        }
+        
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #00ff00;
+            font-weight: 400;
+            padding: 8px 12px;
+            border: 1px solid #00ff00;
+            border-radius: 5px;
+            background: rgba(0, 255, 0, 0.1);
+        }
+        
+        .content {
+            padding: 40px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .section {
+            margin-bottom: 35px;
+            padding: 30px;
+            border: 2px solid;
+            border-image: linear-gradient(135deg, rgba(0, 255, 255, 0.6), rgba(255, 0, 255, 0.6), rgba(0, 255, 128, 0.6)) 1;
+            border-radius: 15px;
+            background: rgba(5, 15, 30, 0.85);
+            backdrop-filter: blur(10px);
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                90deg,
+                transparent,
+                rgba(0, 255, 255, 0.15),
+                rgba(255, 0, 255, 0.15),
+                transparent
+            );
+            transition: left 0.6s ease;
+            z-index: 0;
+        }
+        
+        .section > * {
+            position: relative;
+            z-index: 1;
+        }
+        
+        .section h2 {
+            color: #00ffff;
+            font-size: 1.8em;
+            margin-bottom: 20px;
+            text-shadow: 0 0 8px rgba(0, 255, 255, 0.6);
+            border-bottom: 2px solid rgba(0, 255, 255, 0.4);
+            padding-bottom: 10px;
+        }
+        
+        .section:hover::before {
+            left: 100%;
+        }
+        
+        .section:hover {
+            border-image: linear-gradient(135deg, rgba(0, 255, 255, 0.8), rgba(255, 0, 255, 0.8), rgba(0, 255, 128, 0.8)) 1;
+            background: rgba(8, 20, 40, 0.9);
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 
+                0 8px 25px rgba(0, 255, 255, 0.4),
+                0 15px 50px rgba(255, 0, 255, 0.3),
+                0 20px 80px rgba(0, 255, 128, 0.2);
+        }
+        
+        .section h2 {
+            color: #00ffff;
+            font-size: 1.5em;
+            font-weight: 600;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #ff00ff;
+            position: relative;
+        }
+        
+        .section h2::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 50px;
+            height: 2px;
+            background: #00ff00;
+        }
+        
+        .about-text {
+            font-size: 1em;
+            line-height: 1.8;
+            color: #e0e0e0;
+            background: rgba(0, 255, 255, 0.05);
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 4px solid #00ffff;
+        }
+        
+        .job {
+            margin-bottom: 25px;
+            padding: 20px;
+            border: 1px solid rgba(255, 0, 255, 0.3);
+            border-radius: 8px;
+            background: rgba(255, 0, 255, 0.05);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        
+        .job:hover {
+            border-color: #ff00ff;
+            background: rgba(255, 0, 255, 0.1);
+            transform: translateX(5px);
+        }
+        
+        .job::before {
+            content: '>';
+            position: absolute;
+            left: -15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #00ff00;
+            font-size: 1.5em;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .job:hover::before {
+            opacity: 1;
+        }
+        
+        .job-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+        }
+        
+        .job-title {
+            color: #00ffff;
+            font-size: 1.1em;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .job-period {
+            color: #ff00ff;
+            font-weight: 400;
+            font-family: 'JetBrains Mono', monospace;
+        }
+        
+        .job-description {
+            margin-bottom: 15px;
+            color: #b0b0b0;
+            font-style: italic;
+        }
+        
+        .job-tasks {
+            list-style: none;
+            margin-bottom: 15px;
+        }
+        
+        .job-tasks li {
+            margin-bottom: 8px;
+            padding-left: 20px;
+            position: relative;
+            color: #e0e0e0;
+        }
+        
+        .job-tasks li::before {
+            content: "◢";
+            position: absolute;
+            left: 0;
+            color: #00ff00;
+            font-weight: bold;
+        }
+        
+        .tech-stack {
+            background: linear-gradient(45deg, rgba(0, 255, 255, 0.2), rgba(255, 0, 255, 0.2));
+            padding: 8px 15px;
+            border-radius: 20px;
+            display: inline-block;
+            font-size: 0.8em;
+            color: #ffffff;
+            font-weight: 400;
+            border: 1px solid #00ffff;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .education-item {
+            margin-bottom: 20px;
+            padding: 20px;
+            background: rgba(0, 255, 0, 0.05);
+            border-radius: 8px;
+            border-left: 4px solid #00ff00;
+            border-right: 1px solid rgba(0, 255, 0, 0.3);
+        }
+        
+        .education-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 10px;
+            flex-wrap: wrap;
+        }
+        
+        .degree {
+            color: #00ff00;
+            font-size: 1.1em;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+        
+        .university {
+            color: #00ffff;
+            font-weight: 400;
+        }
+        
+        .year {
+            color: #ff00ff;
+            font-family: 'JetBrains Mono', monospace;
+        }
+        
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+        }
+        
+        .skill-category {
+            background: rgba(0, 0, 0, 0.5);
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px solid rgba(0, 255, 255, 0.3);
+            transition: all 0.3s ease;
+        }
+        
+        .skill-category:hover {
+            border-color: #00ffff;
+            background: rgba(0, 255, 255, 0.1);
+        }
+        
+        .skill-category h3 {
+            color: #ff00ff;
+            margin-bottom: 10px;
+            font-size: 1em;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .skill-list {
+            color: #e0e0e0;
+            line-height: 1.6;
+            font-size: 0.9em;
+        }
+        
+        .interests {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        
+        .interest-tag {
+            background: linear-gradient(45deg, #ff0080, #00ffff, #80ff00);
+            background-size: 300% 300%;
+            color: #000;
+            padding: 10px 18px;
+            border-radius: 25px;
+            font-size: 0.9em;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            transition: all 0.4s ease;
+            border: 2px solid transparent;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8);
+        }
+        
+        .interest-tag::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, rgba(255, 255, 255, 0.3), transparent, rgba(255, 255, 255, 0.3));
+            transform: translateX(-100%);
+            transition: transform 0.6s ease;
+        }
+        
+        .interest-tag:hover::before {
+            transform: translateX(100%);
+        }
+        
+        .interest-tag:hover {
+            transform: scale(1.1) rotate(2deg);
+            border-color: #ffffff;
+            box-shadow: 
+                0 0 25px rgba(255, 0, 128, 0.8),
+                0 0 50px rgba(0, 255, 255, 0.6),
+                0 0 75px rgba(128, 255, 0, 0.4);
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 1);
+        }
+        
+        .highlight {
+            background: rgba(0, 255, 0, 0.1);
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+            border: 1px solid #00ff00;
+            border-left: 4px solid #00ff00;
+        }
+        
+        .terminal-prompt {
+            color: #00ff00;
+            font-family: 'JetBrains Mono', monospace;
+        }
+        
+        .terminal-prompt::before {
+            content: "user@barbora:~$ ";
+            color: #00ffff;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+            
+            .header {
+                padding: 30px 20px;
+            }
+            
+            .glitch {
+                font-size: 2em;
+            }
+            
+            .contact-info {
+                gap: 15px;
+            }
+            
+            .content {
+                padding: 20px;
+            }
+            
+            .job-header, .education-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
+        
+        /* Scrollbar styling */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: #0a0a0a;
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: #00ffff;
+            border-radius: 4px;
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background: #ff00ff;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="cv-card">
+            <div class="cyber-grid"></div>
+            
+            <div class="header">
+                <h1 class="glitch" data-text="BARBORA ŠANDOVÁ">BARBORA ŠANDOVÁ</h1>
+                <div class="subtitle">[ DATA SCIENTIST & ENGINEER ]</div>                <div class="contact-info">
+                    <div class="contact-item">
+                        <span>📧</span>
+                        <span>sandovabarb@gmail.com</span>
+                    </div>
+                    <div class="contact-item">
+                        <span>📍</span>
+                        <span>Prague.exe</span>
+                    </div>
+                    <div class="contact-item">
+                        <span>🎓</span>
+                        <span>MFDA FSV IES UK</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="content">
+                <div class="section">
+                    <h2>Initialize.exe</h2>
+                    <div class="about-text">
+                        <span class="terminal-prompt">whoami</span><br><br>
+                        Full-stack data professional bridging the gap between advanced analytics and production engineering. I build everything from exploratory statistical models to scalable data pipelines - designing complex dbt flows, implementing ML algorithms, and architecting infrastructure that serves hundreds of thousands of users. My work spans the entire data lifecycle: from initial hypothesis testing and causal inference through to automated ETL pipelines and real-time prediction systems. Strong mathematical foundation in econometrics and stochastic processes, combined with hands-on engineering experience in building robust, production-ready data solutions.
+                    </div>
+                </div>
+                
+                <div class="section">
+                    <h2>Career.log</h2>
+                    
+                    <div class="job">
+                        <div class="job-header">
+                            <div class="job-title">Data Analyst | Golemio (Prague City Data)</div>
+                            <div class="job-period">[05.2024 - current]</div>
+                        </div>
+                        <div class="job-description">
+                            Architecting data infrastructure and ML systems for Prague's smart city ecosystem.
+                        </div>
+                        <ul class="job-tasks">
+                            <li>Build production ML pipelines using Python/SQL, deploy via dbt and Prefect/Argo</li>
+                            <li>Developed transport delay prediction algorithms using ensemble methods</li>
+                            <li>Lead agile ceremonies for cross-functional data teams</li>
+                            <li>Create real-time visualization and automation tools for city operations</li>
+                        </ul>
+                        <div class="tech-stack">Python • SQL • dbt • Prefect • Docker • Azure</div>
+                    </div>
+                    
+                    <div class="job">
+                        <div class="job-header">
+                            <div class="job-title">Data & Software Engineer | Medicalc Software</div>
+                            <div class="job-period">[01.2024 - 05.2024]</div>
+                        </div>
+                        <div class="job-description">
+                            Medical data systems and statistical analysis in healthcare tech.
+                        </div>
+                        <ul class="job-tasks">
+                            <li>Built C++17 medical data processing systems with strict memory optimization</li>
+                            <li>Applied advanced Bayesian methods to clinical datasets</li>
+                            <li>Developed ML models for medical prediction and classification tasks</li>
+                        </ul>
+                        <div class="tech-stack">C++ • Python • Oracle • Bayesian Stats</div>
+                    </div>
+                    
+                    <div class="job">
+                        <div class="job-header">
+                            <div class="job-title">Software Engineer | ČSFD</div>
+                            <div class="job-period">[02.2022 - 01.2024]</div>
+                        </div>
+                        <div class="job-description">
+                            Backend systems for Czech Republic's largest entertainment database.
+                        </div>
+                        <ul class="job-tasks">
+                            <li>Built advanced web scraping systems for movie and TV show data collection</li>
+                            <li>Developed robust OOP architectures using Python design patterns and SOLID principles</li>
+                            <li>Designed and implemented RabbitMQ message queues for async data processing workflows</li>
+                            <li>Extensive unit testing, integration testing, and test automation development</li>
+                            <li>Database optimization and query performance tuning for high-traffic applications</li>
+                        </ul>
+                        <div class="tech-stack">Python • OOP Design Patterns • Web Scraping • PostgreSQL • RabbitMQ • Testing • Docker • Redis</div>
+                    </div>
+                    
+                    <div class="job">
+                        <div class="job-header">
+                            <div class="job-title">Freelance Data Scientist</div>
+                            <div class="job-period">[09.2022 - current]</div>
+                        </div>
+                        <div class="job-description">
+                            Independent ML consulting and analytics projects for various clients.
+                        </div>
+                        <ul class="job-tasks">
+                            <li>Sales prediction models for Kofio.cz e-commerce platform</li>
+                            <li>Business analytics and sales analysis for Freshlabels.cz</li>
+                            <li>Financial analysis for Five Elephant (Berlin) and Amnesty International</li>
+                        </ul>
+                        <div class="tech-stack">ML • Analytics • Business Intelligence</div>
+                    </div>
+                    
+                    <div class="job">
+                        <div class="job-header">
+                            <div class="job-title">Data Analyst | Ernst & Young (Forensic Services)</div>
+                            <div class="job-period">[03.2021 - 02.2022]</div>
+                        </div>
+                        <div class="job-description">
+                            Forensic data analysis for financial crime investigations and public procurement fraud detection.
+                        </div>
+                        <ul class="job-tasks">
+                            <li>Developed text analysis algorithms using fuzzy wuzzy for identifying potential shell companies and suspicious subcontractor networks</li>
+                            <li>Built SQL queries for analyzing public procurement data to detect fraud patterns in government contracts</li>
+                            <li>Conducted detailed analysis of financial statements and transaction data to identify suspicious activities</li>
+                            <li>Performed forensic data mining across large financial datasets for fraud investigation cases</li>
+                        </ul>
+                        <div class="tech-stack">Python • SQL • fuzzy wuzzy • Text Analysis • Financial Data Mining</div>
+                    </div>
+                    
+                    <div class="job">
+                        <div class="job-header">
+                            <div class="job-title">Junior Diplomat | United Nations</div>
+                            <div class="job-period">[2020 - 2021]</div>
+                        </div>
+                        <div class="job-description">
+                            International diplomacy and program coordination for development initiatives.
+                        </div>
+                        <ul class="job-tasks">
+                            <li>Coordinated international development programs across 15+ countries</li>
+                            <li>Managed diplomatic communications and stakeholder relations</li>
+                            <li>Facilitated multilateral negotiations and policy implementation</li>
+                            <li>Prepared briefing materials and reports for senior diplomatic staff</li>
+                        </ul>
+                        <div class="tech-stack">Diplomacy • International Relations • Program Management • Policy Analysis</div>
+                    </div>
+                </div>
+                
+                <div class="section">
+                    <h2>education.db</h2>
+                    <div class="about-text">
+                        <span class="terminal-prompt">SELECT degree, institution, focus FROM education ORDER BY year DESC;</span>
+                    </div>
+                    
+                    <div class="education-item">
+                        <div class="education-header">
+                            <div>
+                                <div class="degree">Master in Finance & Data Analytics (MFDA)</div>
+                                <div class="university">Charles University (IES FSV)</div>
+                            </div>
+                            <div class="year">[2024 - 2026]</div>
+                        </div>
+                        <div>Year 1 completed with red diploma track performance</div>
+                    </div>
+                    
+                    <div class="education-item">
+                        <div class="education-header">
+                            <div>
+                                <div class="degree">Ing. Data & Analytics for Business</div>
+                                <div class="university">Prague School of Economics</div>
+                            </div>
+                            <div class="year">[2021 - 2024]</div>
+                        </div>
+                        <div class="highlight">
+                            <strong>THESIS:</strong> "Log Patternization for University Cybersecurity"<br>
+                            <strong>STATUS:</strong> IT Spy Award Nominee 2025 🏆<br>
+                            <strong>TECH:</strong> Enhanced Nagappan-Vouk Algorithm, parallel processing optimization
+                        </div>
+                    </div>
+                    
+                    <div class="education-item">
+                        <div class="education-header">
+                            <div>
+                                <div class="degree">Bc. Diplomacy</div>
+                                <div class="university">Prague School of Economics</div>
+                            </div>
+                            <div class="year">[2018 - 2021]</div>
+                        </div>
+                        <div>Exchange Program: Berlin School of Economics & Law</div>
+                    </div>
+                </div>
+                
+                <div class="section">
+                    <h2>Skills.json</h2>
+                    <div class="skills-grid">
+                        <div class="skill-category">
+                            <h3>Core Programming</h3>
+                            <div class="skill-list">Python • C++ • C# • SQL • JavaScript • PHP</div>
+                        </div>
+                        <div class="skill-category">
+                            <h3>Data Engineering</h3>
+                            <div class="skill-list">dbt • Prefect • Airflow • Docker • CI/CD • ETL</div>
+                        </div>
+                        <div class="skill-category">
+                            <h3>Cloud & Platforms</h3>
+                            <div class="skill-list">Azure • AWS • Django • Flask • Unity • Docker</div>
+                        </div>
+                        <div class="skill-category">
+                            <h3>Databases & APIs</h3>
+                            <div class="skill-list">PostgreSQL • Neo4j • MongoDB • REST • GraphQL</div>
+                        </div>
+                        <div class="skill-category">
+                            <h3>Visualization & BI</h3>
+                            <div class="skill-list">Streamlit • PowerBI • Evidence • Folium • Qlik</div>
+                        </div>
+                        <div class="skill-category">
+                            <h3>Creative & Graphics</h3>
+                            <div class="skill-list">Adobe Suite • Computer Graphics • Path Tracing • Ray Tracing</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="section">
+                    <h2>ml_projects.py</h2>
+                    <div class="about-text">
+                        <span class="terminal-prompt">python ml_projects.py --show-impact --enterprise-scale</span>
+                    </div>
+                    
+                    <div class="highlight">
+                        <strong>PRAGUE TRANSPORT PREDICTION SYSTEM</strong> [Current - Golemio]<br>
+                        <strong>Tech:</strong> Kalman filter implementation for transport delay predictions in Python. Currently experimenting with VaR models and mean reverting algorithms for enhanced forecasting. Prefect workflow optimization connecting dbt transformations to automated report refreshes<br>
+                        <strong>Impact:</strong> Statistical improvements in delay prediction accuracy. Part of Prague smart city platform serving city-wide transport analytics
+                    </div>
+                    
+                    <div class="highlight">
+                        <strong>UNIVERSITY CYBERSECURITY LOG ANALYZER</strong> [IT Spy Nominee 2025]<br>
+                        <strong>Tech:</strong> Enhanced Nagappan-Vouk algorithm with parallel processing in Python. SSH data pump architecture enabling analysis of heterogeneous logs from 2,200 sources (expanded from original 30)<br>
+                        <strong>Performance:</strong> 96% F1 score accuracy, significant processing time reduction through parallelization, enterprise-scale log pattern recognition
+                    </div>
+                    
+                    <div class="highlight">
+                        <strong>FORENSIC FINANCIAL ANALYTICS</strong> [Ernst & Young]<br>
+                        <strong>Technology:</strong> Text analysis using fuzzy wuzzy for identifying shell companies in public procurement data. SQL-based analysis of financial statements and transaction patterns for fraud detection<br>
+                        <strong>Impact:</strong> Successful identification of suspicious subcontractor networks and fraudulent activities in government contracts
+                    </div>
+                    
+                    <div class="highlight">
+                        <strong>E-COMMERCE & BUSINESS FORECASTING</strong> [Multi-Client Portfolio]<br>
+                        <strong>ML Stack:</strong> LSTM neural networks for coffee order volume prediction (Kofio.cz), ARIMA time series models for demand fluctuation analysis (Freshlabels.cz), comprehensive financial analytics including volume, customer, and margin analysis (Five Elephant, Amnesty International)<br>
+                        <strong>Business Impact:</strong> Improved demand forecasting accuracy and ROI optimization across diverse industry clients
+                    </div>
+                    
+                    <div class="highlight">
+                        <strong>STATISTICAL CAUSAL INFERENCE RESEARCH</strong> [Good Data Hackathon - 7th/20]<br>
+                        <strong>Methodology:</strong> Vector Autoregression (VAR) models, Granger causality testing, spatial-temporal correlation analysis for transport-event relationships<br>
+                        <strong>Research Impact:</strong> Statistically significant findings on transport delay correlations, methodology recognized by Prague Transport Company
+                    </div>
+                </div>
+                
+                <div class="section">
+                    <h2>Leadership & Impact.log</h2>
+                    
+                    <div class="highlight">
+                        <strong>AGILE TEAM LEADERSHIP</strong> [Current - Golemio]<br>
+                        Leading sprint ceremonies for 7-person data science team within 10-12 member cross-functional squads. Managing retrospectives, sprint planning, and daily standups for city-wide analytics projects
+                    </div>
+                    
+                    <div class="highlight">
+                        <strong>JUNIOR DIPLOMAT INITIATIVE</strong> [2018-2020]<br>
+                        Team Leader coordinating international public events and diplomatic simulations. Managed teams of 15+ participants across multiple European countries
+                    </div>
+                    
+                    <div class="highlight">
+                        <strong>VOLUNTEER PORTFOLIO</strong><br>
+                        Czech Television Production Assistant • UN Program Support • Educational Tutoring • Dog Training Specialist
+                    </div>
+                </div>
+                
+                <div class="section">
+                    <h2>Languages.cfg</h2>
+                    <div class="skills-grid">
+                        <div class="skill-category">
+                            <h3>Native</h3>
+                            <div class="skill-list">Czech • Slovak</div>
+                        </div>
+                        <div class="skill-category">
+                            <h3>Advanced [C1]</h3>
+                            <div class="skill-list">English • German</div>
+                        </div>
+                        <div class="skill-category">
+                            <h3>Intermediate [B2]</h3>
+                            <div class="skill-list">French</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="section">
+                    <h2>Personal.interests</h2>
+                    <div class="interests">
+                        <span class="interest-tag">Dogs</span>
+                        <span class="interest-tag">Economics</span>
+                        <span class="interest-tag">Guitar</span>
+                        <span class="interest-tag">Drums</span>
+                        <span class="interest-tag">Piano</span>
+                        <span class="interest-tag">Music Production</span>
+                        <span class="interest-tag">3D Printing</span>
+                        <span class="interest-tag">Coffee Art</span>
+                        <span class="interest-tag">Cinema</span>
+                        <span class="interest-tag">Football</span>
+                        <span class="interest-tag">Tennis</span>
+                        <span class="interest-tag">Running</span>
+                        <span class="interest-tag">Harry Styles</span>
+                        <span class="interest-tag">Růže pro Nevěstu</span>
+                        <span class="interest-tag">Politics</span>
+                        <span class="interest-tag">History</span>
+                        <span class="interest-tag">Phenomenology</span>
+                    </div>
+                    
+                    <div class="about-text" style="margin-top: 20px;">
+                        <span class="terminal-prompt">cat fun_facts.txt</span><br><br>
+                        <em>Multi-instrumentalist (guitar, drums, piano) with a passion for music and sound engineering. Harry Styles fan who appreciates both musical artistry and data-driven creativity. When not optimizing data pipelines, you'll find me training service dogs or guilty-pleasure watching Czech reality TV. Because every data engineer needs balance! 🎸🥁</em>
+                    </div>
+                </div>
+                
+                <div class="section">
+                    <h2>Contact.exe</h2>
+                    <div class="about-text">
+                        <span class="terminal-prompt">cat contact_info.txt</span><br><br>
+                        <strong>Email:</strong> sandovabarb@gmail.com<br>
+                        <strong>Location:</strong> Prague, Czech Republic<br>
+                        <strong>Availability:</strong> Immediate for interesting opportunities<br>
+                        <strong>Languages:</strong> Czech/Slovak (native) • English (C1) • German (C1) • French (B2)<br><br>
+                        <em>"Passionate about building data systems that solve real problems and create meaningful impact. Ready to bring advanced analytics and engineering expertise to transform the world, wherever the true meaning is."</em>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Enhanced terminal cursor with subtle glow
+            const terminalPrompts = document.querySelectorAll('.terminal-prompt');
+            terminalPrompts.forEach(prompt => {
+                prompt.addEventListener('mouseenter', function() {
+                    this.style.transform = 'scale(1.05)';
+                    this.style.textShadow = '0 0 8px #00ff80';
+                    this.style.color = '#00ff80';
+                    this.style.transition = 'all 0.3s ease';
+                });
+                
+                prompt.addEventListener('mouseleave', function() {
+                    this.style.transform = 'scale(1)';
+                    this.style.textShadow = 'none';
+                    this.style.color = '#00ff00';
+                });
+            });
+            
+            // Tech stack highlighting
+            const techStacks = document.querySelectorAll('.tech-stack');
+            techStacks.forEach(stack => {
+                stack.addEventListener('mouseenter', function() {
+                    this.style.background = 'linear-gradient(45deg, rgba(0, 255, 255, 0.4), rgba(255, 0, 255, 0.4), rgba(0, 255, 128, 0.4))';
+                    this.style.transform = 'scale(1.05)';
+                    this.style.boxShadow = '0 0 15px rgba(0, 255, 255, 0.6)';
+                    this.style.transition = 'all 0.3s ease';
+                });
+                
+                stack.addEventListener('mouseleave', function() {
+                    this.style.background = 'linear-gradient(45deg, rgba(0, 255, 255, 0.2), rgba(255, 0, 255, 0.2))';
+                    this.style.transform = 'scale(1)';
+                    this.style.boxShadow = 'none';
+                });
+            });
+            
+            // Section fade-in animation
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach((entry, index) => {
+                    if (entry.isIntersecting) {
+                        setTimeout(() => {
+                            entry.target.style.opacity = '1';
+                            entry.target.style.transform = 'translateY(0) scale(1)';
+                        }, index * 100);
+                    }
+                });
+            }, {
+                threshold: 0.1,
+                rootMargin: '0px 0px -30px 0px'
+            });
+            
+            const sections = document.querySelectorAll('.section');
+            sections.forEach(section => {
+                section.style.opacity = '0';
+                section.style.transform = 'translateY(30px) scale(0.98)';
+                section.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+                observer.observe(section);
+            });
+            
+            // Interactive job entries
+            const jobs = document.querySelectorAll('.job');
+            jobs.forEach(job => {
+                job.addEventListener('mouseenter', function() {
+                    this.style.transform = 'translateX(5px)';
+                    this.style.borderColor = '#00ffff';
+                    this.style.backgroundColor = 'rgba(0, 255, 255, 0.1)';
+                    this.style.boxShadow = '0 0 15px rgba(0, 255, 255, 0.3)';
+                    this.style.transition = 'all 0.3s ease';
+                });
+                
+                job.addEventListener('mouseleave', function() {
+                    this.style.transform = 'translateX(0)';
+                    this.style.borderColor = 'rgba(255, 0, 255, 0.3)';
+                    this.style.backgroundColor = 'transparent';
+                    this.style.boxShadow = 'none';
+                });
+            });
+            
+            // Interest tag interactions
+            const interestTags = document.querySelectorAll('.interest-tag');
+            interestTags.forEach(tag => {
+                tag.addEventListener('click', function() {
+                    this.style.transform = 'scale(1.2) rotate(5deg)';
+                    this.style.boxShadow = '0 0 30px rgba(255, 255, 255, 0.8)';
+                    
+                    setTimeout(() => {
+                        this.style.transform = 'scale(1) rotate(0deg)';
+                        this.style.boxShadow = 'none';
+                    }, 300);
+                });
+            });
+            
+            // Highlight hover effects
+            const highlights = document.querySelectorAll('.highlight');
+            highlights.forEach(highlight => {
+                highlight.addEventListener('mouseenter', function() {
+                    this.style.background = 'linear-gradient(135deg, rgba(0, 255, 255, 0.15), rgba(255, 0, 255, 0.15))';
+                    this.style.borderLeft = '4px solid #00ffff';
+                    this.style.transform = 'scale(1.02)';
+                    this.style.transition = 'all 0.3s ease';
+                });
+                
+                highlight.addEventListener('mouseleave', function() {
+                    this.style.background = 'rgba(0, 255, 0, 0.1)';
+                    this.style.borderLeft = '4px solid #00ff00';
+                    this.style.transform = 'scale(1)';
+                });
+            });
+        });
+    </script>
+</body>
+</html>
